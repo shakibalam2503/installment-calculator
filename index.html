@@ -41,7 +41,7 @@
 
         <!-- Credit Hour Input -->
         <label class="block text-sm font-medium mt-3">Enter Credit Hours:</label>
-        <input type="number" id="creditHours" class="w-full mt-1 p-2 rounded bg-gray-700 text-white" placeholder="Enter credit hours">
+        <input type="number" id="creditHours" class="w-full mt-1 p-2 rounded bg-gray-700 text-white" placeholder="Enter credit hours" min="1">
 
         <!-- Scholarship Selection -->
         <label class="block text-sm font-medium mt-3">Select Scholarship:</label>
@@ -61,8 +61,27 @@
 
     <script>
         function calculateFees() {
+            const creditHoursInput = document.getElementById("creditHours").value.trim();
+
+            // Validate credit hours input
+            if (isNaN(creditHoursInput) || creditHoursInput === "") {
+                document.getElementById("results").innerHTML = `
+                    <p class="text-red-500 font-bold">Error: Please enter a valid number for credit hours.</p>
+                `;
+                return; // Stop execution if input is invalid
+            }
+
+            const creditHours = parseInt(creditHoursInput);
+
+            // Ensure credit hours is at least 1
+            if (creditHours < 1) {
+                document.getElementById("results").innerHTML = `
+                    <p class="text-red-500 font-bold">Error: Credit hours must be at least 1.</p>
+                `;
+                return; // Stop execution if credit hours is less than 1
+            }
+
             const department = document.getElementById("department").value;
-            const creditHours = parseInt(document.getElementById("creditHours").value) || 0;
             const scholarship = document.getElementById("scholarship").value;
             const batch = document.getElementById("batch").value;
             const semesterFee = 5000;
@@ -90,9 +109,9 @@
                 totalCost = semesterFee;
             }
 
-            let firstInstallment = totalCreditFee * 0.4 + semesterFee;
-            let secondInstallment = totalCreditFee * 0.3;
-            let thirdInstallment = totalCreditFee * 0.3;
+            let firstInstallment = totalCost * 0.4 ;
+            let secondInstallment = totalCost * 0.3;
+            let thirdInstallment = totalCost * 0.3;
 
             if (scholarship === "100") {
                 firstInstallment = semesterFee;
