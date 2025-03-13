@@ -89,11 +89,13 @@
             let creditFee = 5000; // Default per credit hour fee
 
             if (department === "CSE") {
-                if (["241", "242"].includes(batch)) {
-                    creditFee = 5500;
-                } else if (["243", "251"].includes(batch)) {
+                if (["241", "233"].includes(batch)) {
+                    creditFee = 5525;
+                } else if (["242","243", "251"].includes(batch)) {
                     creditFee = 6500;
                 }
+                
+                
             }
 
             let totalCreditFee = creditHours * creditFee;
